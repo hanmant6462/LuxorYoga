@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Luxor Heights Art Of Living Center</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Luxor Heights</div>
+                <div class="mobile-menu-btn"><i class="fas fa-bars"></i></div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="classes.html">Classes</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="contact.html" class="active" style="color: var(--primary-color);">Contact</a></li>
+                    <li><a href="contact.html" class="btn btn-primary" style="padding: 0.5rem 1rem;">Join Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div style="height: 80px;"></div>
+
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-lg">
+                <h1>Get in Touch</h1>
+                <p>We'd love to hear from you. Visit us or send a message.</p>
+            </div>
+
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg);">
+
+                <!-- Contact Info -->
+                <div>
+                    <div
+                        style="background: white; padding: var(--spacing-md); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: var(--spacing-md);">
+                        <h3 class="mb-sm">Contact Information</h3>
+                        <p class="mb-sm"><i class="fas fa-map-marker-alt"
+                                style="width: 20px; color: var(--primary-color);"></i> 123 Peace Avenue, Luxor Heights,
+                            City, State, Zip</p>
+                        <p class="mb-sm"><i class="fas fa-phone" style="width: 20px; color: var(--primary-color);"></i>
+                            +91 98765 43210</p>
+                        <p class="mb-sm"><i class="fas fa-envelope"
+                                style="width: 20px; color: var(--primary-color);"></i> info@luxorheights.com</p>
+
+                        <div style="margin-top: 1rem;">
+                            <a href="https://wa.me/1234567890" target="_blank" class="btn btn-primary"
+                                style="background-color: #25D366; width: 100%; display: block; text-align: center;">
+                                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Map Embed Placeholder -->
+                    <div
+                        style="width: 100%; height: 300px; background: #eee; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: var(--text-light);">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.566835165971!2d76.7794179!3d30.7333148!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed0be66ec96b%3A0xa5ff47f5509e56e1!2sChandigarh%2C%20India!5e0!3m2!1sen!2sin!4v1625641234567!5m2!1sen!2sin"
+                            width="100%" height="100%" style="border:0; border-radius: var(--radius-md);"
+                            allowfullscreen="" loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div>
+                    <form
+                        style="background: white; padding: var(--spacing-md); border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
+                        <h3 class="mb-md">Send us a Message</h3>
+
+                        <div class="mb-sm">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Name</label>
+                            <input type="text" placeholder="Your Name"
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: var(--radius-sm); font-family: inherit;">
+                        </div>
+
+                        <div class="mb-sm">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Email</label>
+                            <input type="email" placeholder="Your Email"
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: var(--radius-sm); font-family: inherit;">
+                        </div>
+
+                        <div class="mb-sm">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Phone</label>
+                            <input type="tel" placeholder="Your Phone Number"
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: var(--radius-sm); font-family: inherit;">
+                        </div>
+
+                        <div class="mb-sm">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Interested
+                                In</label>
+                            <select
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: var(--radius-sm); font-family: inherit; background: white;">
+                                <option>General Inquiry</option>
+                                <option>Happiness Program</option>
+                                <option>Sahaj Samadhi Meditation</option>
+                                <option>Kids & Teens Programs</option>
+                                <option>Events</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-md">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Message</label>
+                            <textarea rows="4" placeholder="How can we help you?"
+                                style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: var(--radius-sm); font-family: inherit;"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                &copy; 2024 Luxor Heights Art Of Living Center. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

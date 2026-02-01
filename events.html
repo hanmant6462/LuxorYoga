@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events & Workshops - Luxor Heights Art Of Living Center</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Luxor Heights</div>
+                <div class="mobile-menu-btn"><i class="fas fa-bars"></i></div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="classes.html">Classes</a></li>
+                    <li><a href="events.html" class="active" style="color: var(--primary-color);">Events</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="contact.html" class="btn btn-primary" style="padding: 0.5rem 1rem;">Join Now</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div style="height: 80px;"></div>
+
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-lg">
+                <h1>Upcoming Events & Workshops</h1>
+                <p>Don't miss out on our special sessions.</p>
+            </div>
+
+            <div
+                style="display: grid; gap: var(--spacing-md); grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+
+                <!-- Event 1 -->
+                <div
+                    style="background: white; border-radius: var(--radius-md); padding: var(--spacing-md); box-shadow: var(--shadow-md); border-top: 5px solid var(--primary-color);">
+                    <div
+                        style="color: var(--primary-dark); font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">
+                        Upcoming</div>
+                    <h2 class="mb-sm">Mega Yoga Marathon</h2>
+                    <p style="color: var(--text-light); margin-bottom: 1rem;"><i class="far fa-calendar-alt"></i> March
+                        15, 2026 | 7:00 AM</p>
+                    <p class="mb-md">Join us for a morning of 108 Sun Salutations. Open to all levels. Creating health
+                        and awareness together.</p>
+
+                    <div
+                        style="background: var(--bg-color); padding: 1rem; border-radius: var(--radius-sm); text-align: center; margin-bottom: 1rem;">
+                        <div style="font-size: 0.9rem; color: var(--text-light);">Starts in</div>
+                        <div class="countdown" data-date="2026-03-15T07:00:00"
+                            style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">
+                            <!-- JS will populate -->
+                            00d : 00h : 00m
+                        </div>
+                    </div>
+
+                    <a href="contact.html" class="btn btn-outline" style="width: 100%;">Register Free</a>
+                </div>
+
+                <!-- Event 2 -->
+                <div
+                    style="background: white; border-radius: var(--radius-md); padding: var(--spacing-md); box-shadow: var(--shadow-md); border-top: 5px solid var(--secondary-color);">
+                    <div
+                        style="color: var(--secondary-color); font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">
+                        Workshop</div>
+                    <h2 class="mb-sm">Full Moon Meditation</h2>
+                    <p style="color: var(--text-light); margin-bottom: 1rem;"><i class="far fa-calendar-alt"></i> March
+                        28, 2026 | 8:00 PM</p>
+                    <p class="mb-md">A guided group meditation under the full moon. Experience deep relaxation and
+                        connection with nature.</p>
+
+                    <a href="contact.html" class="btn btn-outline" style="width: 100%;">Reserve Spot</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Simple Countdown Implementation
+        const countdownEl = document.querySelector('.countdown');
+        if (countdownEl) {
+            const targetDate = new Date(countdownEl.dataset.date).getTime();
+
+            const timer = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                    countdownEl.innerHTML = "Event Started";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+                countdownEl.innerHTML = `${days}d : ${hours}h : ${minutes}m`;
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>
