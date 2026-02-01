@@ -27,3 +27,20 @@ Welcome to the official website repository for **Luxor Heights Art Of Living Cen
 
 - [Instagram](https://www.instagram.com/luxor_yoga_meditation_center/)
 - [Facebook](https://www.facebook.com/LuxorHeights)
+
+## How to Run Locally
+
+Since this is a static website, you can run it easily:
+
+1.  **Directly**: Open `public/index.html` in your browser.
+2.  **Using VS Code Live Server**: Right-click on `public/index.html` and select "Open with Live Server".
+3.  **Using Python**: Run `python -m http.server` in the `public` directory.
+
+## Deployment
+
+This project is configured for **Cloudflare Workers/Pages**.
+
+- **Build Command**: `npm run build` (This is a dummy command as no build is required for static files).
+- **Deploy Command**: `npm run deploy` (Uses `wrangler` to deploy).
+- **Assets**: All static files are located in the `public` directory.
+
