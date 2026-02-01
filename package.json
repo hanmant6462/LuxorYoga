@@ -1,0 +1,13 @@
+{
+    "name": "luxor-yoga-website",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Luxor Heights Art Of Living Center Website",
+    "scripts": {
+        "build": "echo \"No build step, static site only\"",
+        "deploy": "wrangler deploy"
+    },
+    "devDependencies": {
+        "wrangler": "^3.0.0"
+    }
+}
