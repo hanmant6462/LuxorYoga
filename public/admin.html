@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Luxor Heights</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .admin-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-main);
+        }
+
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="login-overlay">
+        <div class="text-center" style="max-width: 400px; padding: 2rem;">
+            <h2>Admin Access</h2>
+            <p class="mb-md">Please enter the password to continue.</p>
+            <input type="password" id="admin-pass" placeholder="Password"
+                style="padding: 1rem; width: 100%; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: var(--radius-md);">
+            <button onclick="checkLogin()" class="btn btn-primary">Login</button>
+            <p id="login-error" style="color: red; margin-top: 1rem; display: none;">Incorrect password</p>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Luxor Admin</div>
+                <div class="nav-links">
+                    <a href="index.html" target="_blank">View Site <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div style="height: 80px;"></div>
+
+    <section class="section">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1>Manage Programs</h1>
+                <div>
+                    <button onclick="saveChanges()" class="btn btn-primary"><i class="fas fa-save"></i> Save
+                        Changes</button>
+                    <button onclick="downloadJson()" class="btn btn-outline" style="margin-left: 0.5rem;"><i
+                            class="fas fa-download"></i> Backup JSON</button>
+                </div>
+            </div>
+
+            <div id="loading" class="text-center">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+            </div>
+
+            <div id="admin-container">
+                <!-- Forms injected here -->
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <button onclick="addProgram()" class="btn btn-outline"><i class="fas fa-plus"></i> Add New
+                    Program</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Simple client-side protection. Real security requires backend auth.
+        const PASSWORD = "admin"; // Placeholder
+        let programs = [];
+
+        function checkLogin() {
+            const input = document.getElementById('admin-pass').value;
+            if (input === PASSWORD) {
+                document.getElementById('login-overlay').style.display = 'none';
+                loadData();
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+
+        async function loadData() {
+            try {
+                // Try API first, then file
+                try {
+                    const res = await fetch('/api/programs');
+                    if (!res.ok) throw new Error("API failed");
+                    programs = await res.json();
+                } catch (e) {
+                    console.warn("API not available, loading static JSON");
+                    const res = await fetch('data/programs.json');
+                    programs = await res.json();
+                }
+                renderForms();
+            } catch (e) {
+                alert("Failed to load data");
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function renderForms() {
+            const container = document.getElementById('admin-container');
+            container.innerHTML = '';
+
+            programs.forEach((prog, index) => {
+                const div = document.createElement('div');
+                div.className = 'admin-card';
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+                        <h3>Program #${index + 1}</h3>
+                        <button onclick="deleteProgram(${index})" style="color: red; background: none; border: none; cursor: pointer;"><i class="fas fa-trash"></i> Remove</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" value="${prog.title || ''}" onchange="updateField(${index}, 'title', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea rows="3" onchange="updateField(${index}, 'description', this.value)">${prog.description || ''}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Timing</label>
+                        <input type="text" value="${prog.timing || ''}" onchange="updateField(${index}, 'timing', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Fee</label>
+                        <input type="text" value="${prog.fee || ''}" onchange="updateField(${index}, 'fee', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Image Path (e.g., assets/images/...)</label>
+                        <input type="text" value="${prog.image || ''}" onchange="updateField(${index}, 'image', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Tag (Optional, e.g., Most Popular)</label>
+                        <input type="text" value="${prog.tag || ''}" onchange="updateField(${index}, 'tag', this.value)">
+                    </div>
+                     <div class="form-group">
+                        <label>Registration Link</label>
+                        <input type="text" value="${prog.link || ''}" onchange="updateField(${index}, 'link', this.value)">
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateField(index, field, value) {
+            programs[index][field] = value;
+        }
+
+        function addProgram() {
+            programs.push({
+                title: "New Program",
+                description: "Program description...",
+                timing: "TBD",
+                fee: "Contact us",
+                image: "assets/images/yoga-class.png",
+                link: "contact.html",
+                benefits: []
+            });
+            renderForms();
+        }
+
+        function deleteProgram(index) {
+            if (confirm("Are you sure?")) {
+                programs.splice(index, 1);
+                renderForms();
+            }
+        }
+
+        async function saveChanges() {
+            const btn = document.querySelector('button[onclick="saveChanges()"]');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+            try {
+                const res = await fetch('/api/programs', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(programs)
+                });
+
+                if (res.ok) {
+                    alert('Saved successfully!');
+                } else {
+                    throw new Error('API Error');
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Could not save to server directly (API not configured or KV missing). Downloading JSON file instead. Please replace public/data/programs.json with this file and commit changes.');
+                downloadJson();
+            }
+            btn.innerHTML = '<i class="fas fa-save"></i> Save Changes';
+        }
+
+        function downloadJson() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(programs, null, 2));
+            const anchor = document.createElement('a');
+            anchor.setAttribute("href", dataStr);
+            anchor.setAttribute("download", "programs.json");
+            document.body.appendChild(anchor);
+            anchor.click();
+            anchor.remove();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "happiness-program",
+    "title": "Happiness Program",
+    "tag": "Most Popular",
+    "description": "Discover the Sudarshan Kriya™, a powerful rhythmic breathing technique that harmonizes the body, mind, and spirit.",
+    "image": "assets/images/yoga-class.png",
+    "benefits": [
+      "Reduces stress and anxiety",
+      "Increases energy levels",
+      "Improves sleep quality"
+    ],
+    "timing": "Mon-Fri, 6:00 AM - 8:00 AM OR 6:00 PM - 8:00 PM",
+    "fee": "$150 / course",
+    "link": "https://aolt.in/947001",
+    "buttonText": "Register Now"
+  },
+  {
+    "id": "sahaj-samadhi",
+    "title": "Sahaj Samadhi Meditation",
+    "description": "'Sahaj' means effortless. Learn an easy-to-practice meditation technique that allows your conscious mind to settle deep into the self.",
+    "image": "assets/images/meditation.png",
+    "timing": "Weekend Workshops (Sat-Sun, 10:00 AM - 12:00 PM)",
+    "fee": "$100 / course",
+    "link": "https://aolt.in/947001",
+    "buttonText": "Register Now"
+  },
+  {
+    "id": "kids-teens",
+    "title": "Kids & Teens Empowerment",
+    "description": "Fun and engaging programs that teach children yoga, meditation, and leadership skills to handle stress and emotions.",
+    "image": "assets/images/kids-yoga.png",
+    "timing": "Summer Camps & Weekly Sessions",
+    "fee": "Contact for details",
+    "link": "contact.html",
+    "buttonText": "Inquire Now"
+  }
+]

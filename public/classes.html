@@ -59,84 +59,15 @@
 
             <div style="display: grid; gap: var(--spacing-md);">
 
-                <!-- Helper for Course Cards -->
-                <!-- Happiness Program -->
-                <div class="program-card"
-                    style="display: flex; flex-direction: column; background: white; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid #eee;">
-                    <div style="flex: 1;">
-                        <img src="assets/images/yoga-class.png" alt="Happiness Program"
-                            style="height: 100%; width: 100%; object-fit: cover; min-height: 250px;">
-                    </div>
-                    <div style="flex: 2; padding: var(--spacing-md);">
-                        <div style="display: unique; justify-content: space-between; align-items: start;">
-                            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Happiness Program</h2>
-                            <span
-                                style="background: var(--accent-color); padding: 0.2rem 0.8rem; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 600;">Most
-                                Popular</span>
-                        </div>
-                        <p style="color: var(--text-light); margin-bottom: 1rem;">
-                            Discover the Sudarshan Kriya™, a powerful rhythmic breathing technique that harmonizes the
-                            body, mind, and spirit.
-                        </p>
-                        <ul style="margin-bottom: 1rem; color: var(--text-color);">
-                            <li><i class="fas fa-check" style="color: var(--success-color);"></i> Reduces stress and
-                                anxiety</li>
-                            <li><i class="fas fa-check" style="color: var(--success-color);"></i> Increases energy
-                                levels</li>
-                            <li><i class="fas fa-check" style="color: var(--success-color);"></i> Improves sleep quality
-                            </li>
-                        </ul>
-                        <div
-                            style="background: var(--bg-color); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
-                            <p><strong>Timing:</strong> Mon-Fri, 6:00 AM - 8:00 AM OR 6:00 PM - 8:00 PM</p>
-                            <p><strong>Fee:</strong> $150 / course</p>
-                        </div>
-                        <a href="https://aolt.in/947001" class="btn btn-primary">Register Now</a>
-                    </div>
+                <!-- Loading State -->
+                <div id="loading" class="text-center" style="grid-column: 1/-1; padding: 2rem;">
+                    <i class="fas fa-spinner fa-spin fa-2x" style="color: var(--primary-color);"></i>
+                    <p class="mt-sm">Loading programs...</p>
                 </div>
 
-                <!-- Sahaj Samadhi -->
-                <div class="program-card"
-                    style="display: flex; flex-direction: column; background: white; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid #eee;">
-                    <div style="flex: 1;">
-                        <img src="assets/images/meditation.png" alt="Sahaj Samadhi"
-                            style="height: 100%; width: 100%; object-fit: cover; min-height: 250px;">
-                    </div>
-                    <div style="flex: 2; padding: var(--spacing-md);">
-                        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Sahaj Samadhi Meditation</h2>
-                        <p style="color: var(--text-light); margin-bottom: 1rem;">
-                            'Sahaj' means effortless. Learn an easy-to-practice meditation technique that allows your
-                            conscious mind to settle deep into the self.
-                        </p>
-                        <div
-                            style="background: var(--bg-color); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
-                            <p><strong>Timing:</strong> Weekend Workshops (Sat-Sun, 10:00 AM - 12:00 PM)</p>
-                            <p><strong>Fee:</strong> $100 / course</p>
-                        </div>
-                        <a href="https://aolt.in/947001" class="btn btn-primary">Register Now</a>
-                    </div>
-                </div>
-
-                <!-- Kids Yoga -->
-                <div class="program-card"
-                    style="display: flex; flex-direction: column; background: white; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid #eee;">
-                    <div style="flex: 1;">
-                        <img src="assets/images/kids-yoga.png" alt="Kids Yoga"
-                            style="height: 100%; width: 100%; object-fit: cover; min-height: 250px;">
-                    </div>
-                    <div style="flex: 2; padding: var(--spacing-md);">
-                        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Kids & Teens Empowerment</h2>
-                        <p style="color: var(--text-light); margin-bottom: 1rem;">
-                            Fun and engaging programs that teach children yoga, meditation, and leadership skills to
-                            handle stress and emotions.
-                        </p>
-                        <div
-                            style="background: var(--bg-color); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
-                            <p><strong>Timing:</strong> Summer Camps & Weekly Sessions</p>
-                            <p><strong>Fee:</strong> Contact for details</p>
-                        </div>
-                        <a href="contact.html" class="btn btn-primary">Inquire Now</a>
-                    </div>
+                <!-- Programs Container -->
+                <div id="programs-container" style="display: contents;">
+                    <!-- Programs will be injected here -->
                 </div>
 
             </div>
@@ -146,19 +77,91 @@
     <!-- Footer Script -->
     <script src="js/main.js"></script>
     <script>
-        // Adjust flex direction via JS or CSS Media Query would be better. 
-        // Adding inline style for simplicity in this artifact, but normally CSS class.
-        const cards = document.querySelectorAll('.program-card');
-        const resizeObserver = new ResizeObserver(entries => {
-            for (let entry of entries) {
-                if (entry.contentRect.width < 768) {
-                    entry.target.style.flexDirection = 'column';
-                } else {
-                    entry.target.style.flexDirection = 'row';
+        async function loadPrograms() {
+            const container = document.getElementById('programs-container');
+            const loading = document.getElementById('loading');
+
+            try {
+                // Try fetching from API first (if worker is set up), fallback to JSON file
+                let data;
+                try {
+                    const response = await fetch('/api/programs');
+                    if (response.ok) {
+                        data = await response.json();
+                    } else {
+                        throw new Error('API not available');
+                    }
+                } catch (e) {
+                    // Fallback to static JSON
+                    const response = await fetch('data/programs.json');
+                    data = await response.json();
                 }
+
+                loading.style.display = 'none';
+
+                data.forEach(program => {
+                    const card = document.createElement('div');
+                    card.className = 'program-card';
+                    card.style.cssText = 'display: flex; flex-direction: column; background: white; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid #eee; transition: var(--transition-normal);';
+
+                    // Allow benefits to be optional
+                    let benefitsHtml = '';
+                    if (program.benefits && program.benefits.length > 0) {
+                        benefitsHtml = `<ul style="margin-bottom: 1rem; color: var(--text-color);">
+                            ${program.benefits.map(b => `<li><i class="fas fa-check" style="color: var(--success-color);"></i> ${b}</li>`).join('')}
+                        </ul>`;
+                    }
+
+                    // Optional Tag
+                    let tagHtml = '';
+                    if (program.tag) {
+                        tagHtml = `<span style="background: var(--accent-color); padding: 0.2rem 0.8rem; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 600;">${program.tag}</span>`;
+                    }
+
+                    card.innerHTML = `
+                        <div style="flex: 1;">
+                            <img src="${program.image}" alt="${program.title}" style="height: 100%; width: 100%; object-fit: cover; min-height: 250px;">
+                        </div>
+                        <div style="flex: 2; padding: var(--spacing-md);">
+                            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+                                <h2 style="font-size: 1.8rem; margin: 0;">${program.title}</h2>
+                                ${tagHtml}
+                            </div>
+                            <p style="color: var(--text-light); margin-bottom: 1rem;">${program.description}</p>
+                            ${benefitsHtml}
+                            <div style="background: var(--bg-color); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
+                                <p><strong>Timing:</strong> ${program.timing}</p>
+                                <p><strong>Fee:</strong> ${program.fee}</p>
+                            </div>
+                            <a href="${program.link}" class="btn btn-primary">${program.buttonText || 'Register Now'}</a>
+                        </div>
+                    `;
+
+                    container.appendChild(card);
+                });
+
+                // Re-apply responsive check
+                handleResize();
+
+            } catch (error) {
+                console.error('Error loading programs:', error);
+                loading.innerHTML = '<p class="text-center" style="color: var(--error-color);">Failed to load programs.</p>';
             }
-        });
-        cards.forEach(card => resizeObserver.observe(card));
+        }
+
+        function handleResize() {
+            const cards = document.querySelectorAll('.program-card');
+            cards.forEach(card => {
+                if (window.innerWidth < 768) {
+                    card.style.flexDirection = 'column';
+                } else {
+                    card.style.flexDirection = 'row';
+                }
+            });
+        }
+
+        window.addEventListener('resize', handleResize);
+        document.addEventListener('DOMContentLoaded', loadPrograms);
     </script>
 </body>
 
