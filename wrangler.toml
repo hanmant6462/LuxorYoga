@@ -1,4 +1,4 @@
-name = "luxor-yoga-website"
+name = "luxoryoga"
 compatibility_date = "2024-02-01"
 main = "worker.js"
 
